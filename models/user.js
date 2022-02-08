@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const playerSchema = new Schema({
+const userSchema = new Schema({
   id: { type: Number, default: 0, unique: true },
   name: { type: String, required: true },
   email: { type: String, match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Enter a valid email address'], unique: true, required: true },
@@ -10,7 +10,7 @@ const playerSchema = new Schema({
 }, { collections: 'users' });
 
 
-playerSchema
+userSchema
   .pre("save", function (next) {
     User.find().sort({ "id": -1 })
       .then((data) => {
@@ -26,5 +26,5 @@ playerSchema
 
 
 
-const User = model('User', playerSchema);
+const User = model('User', userSchema);
 module.exports = User;
